@@ -10,7 +10,7 @@ function Button({...rest}: ButtonProps) {
       type='button'
       {...rest}
       css={css`
-        ${tw`bg-yellow py-[12px] px-[24px] text-purple text-[16px]`}
+        ${tw`bg-yellow py-[12px] px-[24px] text-purple text-[16px] rounded-[8px]`}
       `}
     />
   );

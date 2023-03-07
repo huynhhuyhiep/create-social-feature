@@ -9,7 +9,7 @@ export interface ContentWrapperProps {
 const ContentWrapper = ({children, ...rest}: ContentWrapperProps) => {
   return (
     <div css={css`
-      ${tw`h-screen overflow-y-scroll flex justify-center pt-[22px]`}
+      ${tw`min-h-screen overflow-y-scroll flex justify-center pt-[22px]`}
       background: linear-gradient(138.11deg, #FEF452 0%, #942F70 121.92%);
     `}
          {...rest}

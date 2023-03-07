@@ -1,6 +1,7 @@
-import {HTMLProps, memo} from "react";
+import React, {HTMLProps, memo} from "react";
 import {useFormContext} from "react-hook-form";
 import ErrorMessage from "@/components/ErrorMessage";
+import Label from "@/components/Label";
 
 export interface CheckboxProps extends HTMLProps<HTMLInputElement> {
   name: string;
@@ -17,7 +18,7 @@ function Checkbox({label, name, required, ...rest}: CheckboxProps) {
         aria-invalid={errors[name] ? "true" : "false"}
         type='checkbox'
       />
-      {label && <label htmlFor={name}>{label}</label>}
+      <Label htmlFor={name} tw='ml-[12px]'>{label}</Label>
       {errors[name] && <ErrorMessage>This is required</ErrorMessage>}
     </div>
   );

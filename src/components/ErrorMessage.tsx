@@ -7,7 +7,7 @@ export interface ErrorMessageProps {
 const ErrorMessage = (props: ErrorMessageProps) => {
   const {children} = props;
   return (
-    <span role="alert" tw='text-red-500 mt-[5px]'>{children}</span>
+    <span role="alert" tw='text-red-500 mt-[5px] text-[12px]'>{children}</span>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, {memo, useState} from "react";
+import React, {memo, ReactNode, useEffect, useState} from "react";
 import {Controller, useFormContext} from "react-hook-form";
 import ErrorMessage from "@/components/ErrorMessage";
 import tw, {css} from "twin.macro";
@@ -7,7 +7,7 @@ import Image from 'next/image'
 
 export interface BannerPickerProps {
   name: string;
-  label?: string;
+  label?: ReactNode;
   required?: boolean;
 }
 
@@ -24,7 +24,12 @@ const IMAGE_PICKER = [
   'https://supermomos-app-resources-us.s3.amazonaws.com/Images/SocialBanner/banner_10.jpg'
 ]
 
-function Picker({label, value, onChange}: { label?: string, value: string, onChange: (value: string) => void }) {
+const styles = (isSelected: boolean) => css`
+  ${tw`relative bg-red-200 w-full cursor-pointer hover:scale-[105%] transition h-[100px]`}
+  ${isSelected && tw`border-4 border-yellow`}
+`;
+
+function Picker({label, value, onChange}: { label?: ReactNode, value: string, onChange: (value: string) => void }) {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [selectedBanner, setSelectedBanner] = useState('');
 
@@ -48,23 +53,25 @@ function Picker({label, value, onChange}: { label?: string, value: string, onCha
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />}
       </button>
+
       <Modal
+        title='Choose a banner'
         open={modalIsOpen}
         onOk={() => {
           onChange(selectedBanner)
           setIsOpen(false)
         }}
-        onCancel={() => setIsOpen(false)}
+        onCancel={() => {
+          setIsOpen(false)
+          setSelectedBanner('')
+        }}
       >
-        <div tw='grid grid-cols-6 gap-4 w-full max-w-[1200px] h-[70vh]'>
+        <div tw='grid grid-cols-6 gap-4 w-full max-w-[1200px]'>
           {IMAGE_PICKER.map((item, index) => {
             return (
               <div
+                css={styles(item === selectedBanner)}
                 key={`${item}-${index}`}
-                tw='relative bg-red-200 w-full cursor-pointer hover:scale-[105%]'
-                css={css`
-                  ${value === item && tw`border-primary-50 border border-[5px]`}
-                `}
                 onClick={() => setSelectedBanner(item)}
               >
                 <Image
@@ -72,7 +79,7 @@ function Picker({label, value, onChange}: { label?: string, value: string, onCha
                   fill
                   src={item}
                   alt="Image"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 30vw, 20vw"
                 />
               </div>
             )
@@ -92,7 +99,7 @@ function BannerPicker({label, name, required, ...rest}: BannerPickerProps) {
         name={name}
         rules={{required}}
         control={control}
-        render={({field: {onChange, onBlur, name, value , ref}}) => {
+        render={({field: {onChange, onBlur, name, value, ref}}) => {
           return (
             <Picker value={value} onChange={onChange} label={label}/>
           )

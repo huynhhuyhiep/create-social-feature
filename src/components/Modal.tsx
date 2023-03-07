@@ -12,15 +12,13 @@ export interface ModalProps {
 }
 
 const ModalStyle = styled.div`
-  min-height: 18rem;
-  padding: 14px;
   display: flex;
   width: 100%;
   max-width: 1200px;
   flex-direction: column;
   justify-content: space-between;
   background-color: white;
-  border-radius: 0.25rem;
+  border-radius: 8px;
 `;
 
 const OverlayStyle = styled.div`
@@ -52,10 +50,16 @@ function Modal({title, open, onOk, onCancel, children}: ModalProps) {
           <OverlayStyle {...props}>{contentElement}</OverlayStyle>
         )}
       >
-        {title}
-        {children}
-        <Button onClick={onCancel}>Close</Button>
-        <Button onClick={onOk}>Save</Button>
+        <div tw='p-[20px] pb-[20px] text-[20px] font-bold text-gray-700 border-b border-solid'>
+          {title}
+        </div>
+        <div tw='p-[20px] w-full h-full overflow-auto py-[20px]'>
+          {children}
+        </div>
+        <div tw='flex justify-end items-center p-[20px] border-t border-solid space-x-[20px]'>
+          <Button onClick={onCancel} tw='font-[600] py-[5px] bg-white text-gray-600'>Close</Button>
+          <Button onClick={onOk} tw='font-[600] py-[5px]'>Save</Button>
+        </div>
       </ReactModal>
     </>
   )

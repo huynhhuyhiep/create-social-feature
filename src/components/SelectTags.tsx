@@ -1,6 +1,7 @@
 import React, {memo} from "react";
 import {Controller, useFormContext} from "react-hook-form";
 import ErrorMessage from "@/components/ErrorMessage";
+import Label from "@/components/Label";
 
 export interface SelectTagsProps {
   name: string;
@@ -16,16 +17,15 @@ function SelectTags({label, options, name, required, error, description}: Select
 
   return (
     <div>
-      {label && <label htmlFor={name}>{label}</label>}
-      {description && <div>{description}</div>}
+      <Label htmlFor={name}>{label}</Label>
       <Controller
         name={name}
         rules={{required}}
         control={control}
         render={({field: {onChange, onBlur, name, value = [], ref}}) => {
           return (
-            <div>
-              <div tw='flex space-x-[8px]'>
+            <div tw='space-y-[16px]'>
+              <div tw='flex space-x-[8px] min-h-[33px]'>
                 {value?.map((item: string, index: number) =>
                   <div
                     key={`${item}-${index}`}

@@ -1,9 +1,8 @@
 import Head from 'next/head'
 import Form from "@/components/Form";
 import Input from "@/components/Input";
-import ContentWrapper from "@/components/ContentWrapper";
 import styled from "@emotion/styled";
-import tw from "twin.macro";
+import tw, {theme} from "twin.macro";
 import TextArea from "@/components/TextArea";
 import Checkbox from "@/components/Checkbox";
 import RadioGroup from "@/components/RadioGroup";
@@ -12,14 +11,13 @@ import BannerPicker from "@/components/BannerPicker";
 import {createEvent} from "@/apis";
 import {useMutation} from "@tanstack/react-query";
 import {toast} from "sonner";
-import {CreateEventFieldValues} from "@/types";
-import {parseStringToDateTime} from "@/utils";
-import {FieldValues, SubmitHandler} from "react-hook-form";
 import Button from "@/components/Button";
+import Icon from "@/components/Icon";
+import Label from "@/components/Label";
 
 const StyledTitle = styled(TextArea)`
   ${tw`bg-purple outline-none px-[12px] py-[4px] mt-[32px]`}
-  ${tw`text-[48px] leading-[60px] text-white font-bold`}
+  ${tw`text-[48px] leading-[60px] text-white font-bold rounded-none`}
 `
 export default function Home() {
   const mutationEvent = useMutation({
@@ -46,42 +44,102 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <link rel="icon" href="/favicon.ico"/>
       </Head>
-      <ContentWrapper>
-        <Form onSubmit={onSubmit} className='flex flex-col'>
-          <div tw='flex flex-row'>
-            <div tw='w-[40%]'>
-              <StyledTitle name="title" required rows={1}/>
-              <div tw='columns-2 space-x-[20px]'>
-                <Input label='Date' name="date" type='date' required tw='w-full'/>
-                <Input label='Time' name="time" type='time' required tw='w-full'/>
-              </div>
-              <Input label='venue' name="venue" required tw='w-full'/>
-              <div tw='columns-2 space-x-[20px]'>
-                <Input label='capacity' name="capacity" type='number' required tw='w-full' min={0}/>
-                <Input label='price' name="price" type='number' tw='w-full' min={0}/>
-              </div>
-            </div>
-            <div tw='w-[60%] h-[445px]'>
-              <BannerPicker label='Add a banner' required name='banner'/>
-            </div>
-          </div>
-          <div tw='w-[50%] space-y-[32px]'>
-            <TextArea label='Description' name='description' tw='w-full'/>
-            <div>
-              Setting
-              <Checkbox name="isManualApprove" label='I want to approve attendees'/>
-              <RadioGroup label='Privacy' name='privacy' options={['Public', 'Curated Audience', 'Community Only']}/>
-              <SelectTags
+      <Form onSubmit={onSubmit} tw='flex flex-col mt-[124px] mb-[100px]'>
+        <div tw='flex justify-between'>
+          <div tw='w-[39%] relative'>
+            <StyledTitle name="title" required rows={1} defaultValue='Untitle Event'/>
+
+            <div tw='columns-2 space-x-[20px] my-[28px]'>
+              <Input
+                placeholder='Date'
+                name="date" type='date'
                 required
-                name='tags'
-                label='Tag your social'
-                options={['Product', 'Marketing', 'Design', 'Engineering']}
+                tw='w-full rounded-[8px]'
+                prefix={<Icon icon={'calendar'} size={33} color={theme('colors.darkblue')}/>}
+              />
+              <Input
+                placeholder='Time'
+                name="time"
+                type='time'
+                required
+                tw='w-full rounded-[8px]'
+                prefix={<Icon icon={'time'} size={33} color={theme('colors.darkblue')}/>}
               />
             </div>
-            <Button type='submit' tw='w-full font-[500]'>Submit</Button>
+
+            <Input
+              placeholder='Venue'
+              name="venue"
+              required
+              tw='w-full'
+              prefix={<Icon icon={'locate'} size={16} color={theme('colors.darkblue')}/>}
+            />
+
+            <div tw='columns-2 space-x-[20px] mt-[12px] w-[90%]'>
+              <Input
+                placeholder='Max capacity'
+                name="capacity"
+                type='number'
+                required
+                tw='w-full'
+                min={0}
+                prefix={<Icon icon={'users'} size={16} color={theme('colors.darkblue')}/>}
+              />
+              <Input
+                placeholder='Cost per person'
+                name="price"
+                type='number'
+                required
+                tw='w-full'
+                min={0}
+                prefix={<Icon icon={'money'} size={16} color={theme('colors.darkblue')}/>}
+              />
+            </div>
           </div>
-        </Form>
-      </ContentWrapper>
+          <div tw='w-[60%] h-[445px]'>
+            <BannerPicker
+              label={
+                <div tw='flex justify-center items-center text-darkblue font-[500] text-[20px] space-x-[16px]'>
+                  <Icon icon={'picture'} size={24}/>
+                  <div>Add a banner</div>
+                </div>
+              }
+              required
+              name='banner'
+            />
+          </div>
+        </div>
+        <div tw='w-[50%] space-y-[32px]'>
+          <TextArea label='Description' name='description' tw='w-full' placeholder='Description of your event..'/>
+
+          <div tw='bg-white rounded-[20px] p-[32px] space-y-[24px]'>
+            <div tw='px-[12px] bg-yellow text-purple font-[700] text-[32px] leading-[60px] w-fit'>
+              Settings
+            </div>
+
+            <Checkbox name="isManualApprove" label='I want to approve attendees'/>
+            <RadioGroup
+              label='Privacy'
+              required
+              name='privacy'
+              options={['Public', 'Curated Audience', 'Community Only']}
+            />
+
+            <div>
+              <div tw='text-gray-700 text-[16px] font-[500]'>Tag your social</div>
+              <div tw='text-gray-600 text-[16px]'>Pick tags for our curation engine to work its magin</div>
+            </div>
+
+            <SelectTags
+              required
+              name='tags'
+              options={['Product', 'Marketing', 'Design', 'Engineering']}
+            />
+          </div>
+
+          <Button type='submit' tw='w-full font-[500]'>CREATE SOCIAL</Button>
+        </div>
+      </Form>
     </>
   )
 }
