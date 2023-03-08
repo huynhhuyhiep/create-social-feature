@@ -13,6 +13,7 @@ import {useMutation} from "@tanstack/react-query";
 import {toast} from "sonner";
 import Button from "components/Button";
 import Icon from "components/Icon";
+import {AxiosError} from "axios";
 
 const StyledTitle = styled(TextArea)`
   ${tw`bg-purple outline-none px-[12px] py-[4px] mt-[32px]`}
@@ -20,13 +21,13 @@ const StyledTitle = styled(TextArea)`
 `
 export default function Home() {
   const mutationEvent = useMutation({
+    networkMode: 'always',
     mutationFn: createEvent,
-    onError: (error, variables, context) => {
-      // console.log(`rolling back optimistic update with id ${context.id}`)
-      toast.error('My first toast onError')
+    onError: (error: AxiosError, variables, context) => {
+      toast.error(error?.message)
     },
     onSuccess: (data, variables, context) => {
-      toast.success('My first toast onSuccess')
+      toast.success('Create Event successfully')
     },
   })
 
