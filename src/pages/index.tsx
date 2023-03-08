@@ -20,7 +20,7 @@ const StyledTitle = styled(TextArea)`
   ${tw`text-[48px] leading-[60px] text-white font-bold rounded-none`}
 `
 export default function Home() {
-  const mutationEvent = useMutation({
+  const {mutate, status} = useMutation({
     networkMode: 'always',
     mutationFn: createEvent,
     onError: (error: AxiosError, variables, context) => {
@@ -33,7 +33,7 @@ export default function Home() {
 
   const onSubmit = (data: any) => {
     const {date, time, ...rest} = data
-    mutationEvent.mutate({...rest, startAt: new Date(date + " " + time).toISOString()})
+    mutate({...rest, startAt: new Date(date + " " + time).toISOString()})
   }
 
   return (
@@ -44,6 +44,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <link rel="icon" href="/favicon.ico"/>
       </Head>
+
       <Form
         onSubmit={onSubmit}
         tw='flex flex-col mt-[124px] mb-[100px]'
@@ -150,7 +151,14 @@ export default function Home() {
             />
           </div>
 
-          <Button type='submit' tw='w-full font-[500]'>CREATE SOCIAL</Button>
+          <Button
+            type='submit'
+            tw='w-full font-[500]'
+            disabled={status === 'loading'}
+            throttleDuration={500}
+          >
+            CREATE SOCIAL
+          </Button>
         </div>
       </Form>
     </>
