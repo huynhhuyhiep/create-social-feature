@@ -1,8 +1,8 @@
 import React, {memo, ReactNode, useEffect, useState} from "react";
 import {Controller, useFormContext} from "react-hook-form";
-import ErrorMessage from "@/components/ErrorMessage";
+import ErrorMessage from "components/ErrorMessage";
 import tw, {css} from "twin.macro";
-import Modal from "@/components/Modal";
+import Modal from "components/Modal";
 import Image from 'next/image'
 
 export interface BannerPickerProps {

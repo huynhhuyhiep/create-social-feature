@@ -1,13 +1,14 @@
 import React, {HTMLProps, memo, ReactNode} from "react";
-import {FieldValues, FormProvider, useForm} from "react-hook-form";
+import {DeepPartial, FieldValues, FormProvider, useForm} from "react-hook-form";
 
 export interface FormProps<T> extends Omit<HTMLProps<HTMLFormElement>, 'onSubmit'> {
   children: ReactNode
   onSubmit: (data: T) => any | Promise<any>
+  defaultValues: DeepPartial<T>
 }
 
-function Form<T extends FieldValues>({children, onSubmit, ...rest}: FormProps<T>) {
-  const methods = useForm<T>();
+function Form<T extends FieldValues>({defaultValues, children, onSubmit, ...rest}: FormProps<T>) {
+  const methods = useForm<T>({defaultValues});
 
   return (
     <FormProvider {...methods}>

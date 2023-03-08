@@ -1,5 +1,5 @@
 import React, {memo, MouseEventHandler, ReactNode} from "react";
-import Button from "@/components/Button";
+import Button from "components/Button";
 import ReactModal from "react-modal";
 import styled from "@emotion/styled";
 
@@ -33,8 +33,7 @@ const OverlayStyle = styled.div`
   background: #212b3277;
 `;
 
-ReactModal.setAppElement('#modals')
-
+if (process.env.NODE_ENV !== 'test') ReactModal.setAppElement('#modals');
 function Modal({title, open, onOk, onCancel, children}: ModalProps) {
   return (
     <>

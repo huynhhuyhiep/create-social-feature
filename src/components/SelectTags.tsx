@@ -1,7 +1,9 @@
 import React, {memo} from "react";
 import {Controller, useFormContext} from "react-hook-form";
-import ErrorMessage from "@/components/ErrorMessage";
-import Label from "@/components/Label";
+import ErrorMessage from "components/ErrorMessage";
+import Label from "components/Label";
+import Icon from "components/Icon";
+import {theme} from "twin.macro";
 
 export interface SelectTagsProps {
   name: string;
@@ -35,7 +37,7 @@ function SelectTags({label, options, name, required, error, description}: Select
                     <button
                       tw='px-[7px]'
                       onClick={() => onChange(value.filter((option: string) => option !== item))}>
-                      x
+                      <Icon icon={'close'} color={theme('colors.purple')} size={8}/>
                     </button>
                   </div>
                 )}

@@ -1,5 +1,5 @@
 import axios from "axios";
-import {CreateEventPayload} from "@/types/apis";
+import {CreateEventPayload} from "types/apis";
 
 const BASE_API = '/apis/'
 

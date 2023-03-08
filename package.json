@@ -21,6 +21,7 @@
     "react-hook-form": "^7.43.5",
     "react-icomoon": "^2.5.7",
     "react-modal": "^3.16.1",
+    "react-textarea-autosize": "^8.4.0",
     "sonner": "^0.1.6"
   },
   "devDependencies": {

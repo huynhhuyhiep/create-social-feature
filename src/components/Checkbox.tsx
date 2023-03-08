@@ -1,7 +1,7 @@
 import React, {HTMLProps, memo} from "react";
 import {useFormContext} from "react-hook-form";
-import ErrorMessage from "@/components/ErrorMessage";
-import Label from "@/components/Label";
+import ErrorMessage from "components/ErrorMessage";
+import Label from "components/Label";
 
 export interface CheckboxProps extends HTMLProps<HTMLInputElement> {
   name: string;

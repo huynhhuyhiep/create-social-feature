@@ -1,19 +1,18 @@
 import Head from 'next/head'
-import Form from "@/components/Form";
-import Input from "@/components/Input";
+import Form from "components/Form";
+import Input from "components/Input";
 import styled from "@emotion/styled";
 import tw, {theme} from "twin.macro";
-import TextArea from "@/components/TextArea";
-import Checkbox from "@/components/Checkbox";
-import RadioGroup from "@/components/RadioGroup";
-import SelectTags from "@/components/SelectTags";
-import BannerPicker from "@/components/BannerPicker";
-import {createEvent} from "@/apis";
+import TextArea from "components/TextArea";
+import Checkbox from "components/Checkbox";
+import RadioGroup from "components/RadioGroup";
+import SelectTags from "components/SelectTags";
+import BannerPicker from "components/BannerPicker";
+import {createEvent} from "apis";
 import {useMutation} from "@tanstack/react-query";
 import {toast} from "sonner";
-import Button from "@/components/Button";
-import Icon from "@/components/Icon";
-import Label from "@/components/Label";
+import Button from "components/Button";
+import Icon from "components/Icon";
 
 const StyledTitle = styled(TextArea)`
   ${tw`bg-purple outline-none px-[12px] py-[4px] mt-[32px]`}
@@ -44,10 +43,16 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <link rel="icon" href="/favicon.ico"/>
       </Head>
-      <Form onSubmit={onSubmit} tw='flex flex-col mt-[124px] mb-[100px]'>
+      <Form
+        onSubmit={onSubmit}
+        tw='flex flex-col mt-[124px] mb-[100px]'
+        defaultValues={{
+          title: 'Untitled Event'
+        }}
+      >
         <div tw='flex justify-between'>
-          <div tw='w-[39%] relative'>
-            <StyledTitle name="title" required rows={1} defaultValue='Untitle Event'/>
+          <div tw='md:w-[49%] lg:w-[39%] relative'>
+            <StyledTitle name="title" required rows={1} minRows={1} maxRows={3}/>
 
             <div tw='columns-2 space-x-[20px] my-[28px]'>
               <Input
@@ -96,7 +101,7 @@ export default function Home() {
               />
             </div>
           </div>
-          <div tw='w-[60%] h-[445px]'>
+          <div tw='md:w-[49%] lg:w-[60%] h-[445px]'>
             <BannerPicker
               label={
                 <div tw='flex justify-center items-center text-darkblue font-[500] text-[20px] space-x-[16px]'>
@@ -110,7 +115,14 @@ export default function Home() {
           </div>
         </div>
         <div tw='w-[50%] space-y-[32px]'>
-          <TextArea label='Description' name='description' tw='w-full' placeholder='Description of your event..'/>
+          <TextArea
+            minRows={8}
+            maxRows={20}
+            label='Description'
+            name='description'
+            tw='w-full'
+            placeholder='Description of your event..'
+          />
 
           <div tw='bg-white rounded-[20px] p-[32px] space-y-[24px]'>
             <div tw='px-[12px] bg-yellow text-purple font-[700] text-[32px] leading-[60px] w-fit'>
