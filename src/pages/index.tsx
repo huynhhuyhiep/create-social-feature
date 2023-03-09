@@ -34,12 +34,12 @@ export default function Home() {
       formRef.current?.reset();
 
       toast.success('Create Event successfully', {
-        action: data?.data?.id && {
-          label: 'View Event',
-          onClick: () => {
-            router.push(`/${data?.data?.id}`)
-          },
-        }
+        // action: data?.data?.id && {
+        //   label: 'View Event',
+        //   onClick: () => {
+        //     router.push(`/${data?.data?.id}`)
+        //   },
+        // }
       })
     },
   })
