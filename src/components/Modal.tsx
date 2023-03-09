@@ -2,6 +2,8 @@ import React, {memo, MouseEventHandler, ReactNode} from "react";
 import Button from "components/Button";
 import ReactModal from "react-modal";
 import styled from "@emotion/styled";
+import Icon from "components/Icon";
+import {theme} from "twin.macro";
 
 export interface ModalProps {
   title?: string,
@@ -49,8 +51,13 @@ function Modal({title, open, onOk, onCancel, children}: ModalProps) {
           <OverlayStyle {...props}>{contentElement}</OverlayStyle>
         )}
       >
-        <div tw='p-[20px] pb-[20px] text-[20px] font-bold text-gray-700 border-b border-solid'>
+        <div tw='flex justify-between p-[20px] pb-[20px] text-[20px] font-bold text-gray-700 border-b border-solid'>
           {title}
+          <button
+            tw='px-[7px]'
+            onClick={onCancel}>
+            <Icon icon={'close'} size={20}/>
+          </button>
         </div>
         <div tw='p-[20px] w-full h-full overflow-auto py-[20px]'>
           {children}

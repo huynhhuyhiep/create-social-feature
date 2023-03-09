@@ -53,7 +53,7 @@ export default function Detail({data}: InferGetServerSidePropsType<typeof getSer
           </div>
 
           <StyledIconContent tw='mt-[28px]'>
-            <Icon icon={'locate'} size={16} color={theme('colors.darkblue')}/>
+            <Icon icon={'locate'} size={16} color={theme('colors.darkblue')} tw='min-w-[16px]'/>
             <div tw='text-[16px]'>{venue}</div>
           </StyledIconContent>
 

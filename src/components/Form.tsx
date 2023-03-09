@@ -1,4 +1,4 @@
-import React, {HTMLProps, memo, ReactNode} from "react";
+import React, {forwardRef, HTMLProps, memo, ReactNode, useImperativeHandle} from "react";
 import {DeepPartial, FieldValues, FormProvider, useForm} from "react-hook-form";
 
 export interface FormProps<T> extends Omit<HTMLProps<HTMLFormElement>, 'onSubmit'> {
@@ -7,8 +7,23 @@ export interface FormProps<T> extends Omit<HTMLProps<HTMLFormElement>, 'onSubmit
   defaultValues: DeepPartial<T>
 }
 
-function Form<T extends FieldValues>({defaultValues, children, onSubmit, ...rest}: FormProps<T>) {
+export type FormHandle = {
+  reset: () => void,
+}
+
+function Form<T extends FieldValues>({
+                                       defaultValues,
+                                       children,
+                                       onSubmit,
+                                       ...rest
+                                     }: FormProps<T>, ref: React.ForwardedRef<FormHandle>) {
   const methods = useForm<T>({defaultValues});
+
+  useImperativeHandle(ref, () => ({
+    reset() {
+      methods.reset()
+    }
+  }));
 
   return (
     <FormProvider {...methods}>
@@ -19,4 +34,4 @@ function Form<T extends FieldValues>({defaultValues, children, onSubmit, ...rest
   );
 }
 
-export default memo(Form);
+export default memo(forwardRef(Form));

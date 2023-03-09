@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Form from "components/Form";
+import Form, {FormHandle} from "components/Form";
 import Input from "components/Input";
 import styled from "@emotion/styled";
 import tw, {theme} from "twin.macro";
@@ -15,6 +15,7 @@ import Button from "components/Button";
 import Icon from "components/Icon";
 import {AxiosError} from "axios";
 import {useRouter} from "next/router";
+import {useRef} from "react";
 
 const StyledTitle = styled(TextArea)`
   ${tw`bg-purple outline-none px-[12px] py-[4px] mt-[32px]`}
@@ -22,6 +23,7 @@ const StyledTitle = styled(TextArea)`
 `
 export default function Home() {
   const router = useRouter();
+  const formRef = useRef<FormHandle>(null);
   const {mutate, status} = useMutation({
     networkMode: 'always',
     mutationFn: createEvent,
@@ -29,7 +31,8 @@ export default function Home() {
       toast.error(error?.message)
     },
     onSuccess: (data, variables, context) => {
-      console.log(data)
+      formRef.current?.reset();
+
       toast.success('Create Event successfully', {
         action: data?.data?.id && {
           label: 'View Event',
@@ -56,6 +59,7 @@ export default function Home() {
       </Head>
 
       <Form
+        ref={formRef}
         onSubmit={onSubmit}
         tw='flex flex-col mt-[124px] mb-[100px]'
         defaultValues={{

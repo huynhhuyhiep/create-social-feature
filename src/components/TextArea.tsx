@@ -6,7 +6,7 @@ import TextareaAutosize, {TextareaAutosizeProps} from 'react-textarea-autosize';
 
 export interface TextAreaProps extends TextareaAutosizeProps {
   name: string;
-  label?:string;
+  label?: string;
 }
 
 function TextArea({label, name, required, ...rest}: TextAreaProps) {
@@ -19,7 +19,7 @@ function TextArea({label, name, required, ...rest}: TextAreaProps) {
         name={name}
         rules={{required}}
         control={control}
-        render={({field: {onChange, onBlur, name, value, ref}}) => {
+        render={({field: {onChange, onBlur, name, value = '', ref}}) => {
           return (
             <TextareaAutosize
               ref={ref}
