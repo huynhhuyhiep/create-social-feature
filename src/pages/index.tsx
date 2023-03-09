@@ -32,8 +32,8 @@ export default function Home() {
   })
 
   const onSubmit = (data: any) => {
-    const {date, time, ...rest} = data
-    mutate({...rest, startAt: new Date(date + " " + time).toISOString()})
+    const {date, time, price, capacity, ...rest} = data
+    mutate({...rest, price: +price, capacity: +capacity, startAt: new Date(date + " " + time).toISOString()})
   }
 
   return (
