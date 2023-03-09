@@ -88,13 +88,14 @@ export default function Detail({data}: InferGetServerSidePropsType<typeof getSer
 
 export const getServerSideProps: GetServerSideProps<{ data: EventDetail }> = async (context) => {
   const {params} = context;
-  const res = await axios.get(`https://api.supermomos-dev.com/interview/social/${params?.id}`)
+  const res = await fetch(`https://api.supermomos-dev.com/interview/social/${params?.id}`)
+  const data = await res.json()
 
-  if (!res?.data) {
+  if (!data) {
     return {
       notFound: true,
     }
   }
   // Pass data to the page via props
-  return {props: {data: res.data}}
+  return {props: {data}}
 }
