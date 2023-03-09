@@ -14,12 +14,14 @@ import {toast} from "sonner";
 import Button from "components/Button";
 import Icon from "components/Icon";
 import {AxiosError} from "axios";
+import {useRouter} from "next/router";
 
 const StyledTitle = styled(TextArea)`
   ${tw`bg-purple outline-none px-[12px] py-[4px] mt-[32px]`}
   ${tw`text-[48px] leading-[60px] text-white font-bold rounded-none`}
 `
 export default function Home() {
+  const router = useRouter();
   const {mutate, status} = useMutation({
     networkMode: 'always',
     mutationFn: createEvent,
@@ -27,7 +29,15 @@ export default function Home() {
       toast.error(error?.message)
     },
     onSuccess: (data, variables, context) => {
-      toast.success('Create Event successfully')
+      console.log(data)
+      toast.success('Create Event successfully', {
+        action: data?.data?.id && {
+          label: 'View Event',
+          onClick: () => {
+            router.push(`/${data?.data?.id}`)
+          },
+        }
+      })
     },
   })
 
